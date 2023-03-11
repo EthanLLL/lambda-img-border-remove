@@ -102,6 +102,9 @@ def lambda_handler(event, context):
     content_type = get_content_type(suffix)
     # upload image to s3
     response = upload_img(target, bucket, key, content_type)
+    # delete source and target file from /tmp
+    os.remove(source)
+    os.remove(target)
     if response['ResponseMetadata']['HTTPStatusCode'] == 200:
         print('Uploaded image')
         return {
